@@ -1,2 +1,5 @@
-# Auto detect text files and perform LF normalization
+# Normalize text files for consistent GitHub rendering.
 * text=auto
+*.md text eol=lf
+LICENSE text eol=lf
+.gitattributes text eol=lf
