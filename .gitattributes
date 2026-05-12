@@ -1,5 +1,6 @@
 # Normalize text files for consistent GitHub rendering.
 * text=auto
 *.md text eol=lf
+*.json text eol=lf
 LICENSE text eol=lf
 .gitattributes text eol=lf

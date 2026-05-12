@@ -1,0 +1,11 @@
+{
+  "name": "learning-assistant-profile-builder",
+  "description": "Adds a personalized learning assistant skill that builds long-term study profiles and prioritizes user-provided textbooks, notes, exercises, past exams, answer keys, and teacher emphasis.",
+  "version": "1.0.0",
+  "skills": "./skills",
+  "author": {
+    "name": "Austenzcy"
+  },
+  "repository": "https://github.com/Austenzcy/learning-assistant",
+  "license": "MIT"
+}

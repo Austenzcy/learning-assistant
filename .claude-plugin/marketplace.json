@@ -1,0 +1,27 @@
+{
+  "name": "learning-assistant",
+  "owner": {
+    "name": "Austenzcy"
+  },
+  "description": "Learning assistant skills for building personalized study profiles and using textbooks, notes, exercises, past exams, and teacher emphasis in study workflows.",
+  "plugins": [
+    {
+      "name": "learning-assistant-profile-builder",
+      "source": "./plugins/learning-assistant-profile-builder",
+      "description": "Builds and maintains a personalized learning assistant profile for study workflows.",
+      "version": "1.0.0",
+      "author": {
+        "name": "Austenzcy"
+      },
+      "repository": "https://github.com/Austenzcy/learning-assistant",
+      "license": "MIT",
+      "category": "education",
+      "tags": [
+        "learning",
+        "study",
+        "education",
+        "skills"
+      ]
+    }
+  ]
+}

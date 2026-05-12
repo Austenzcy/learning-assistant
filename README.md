@@ -1,10 +1,10 @@
-# Learning Assistant Profile Builder
+# Learning Assistant
 
-## Skill 简介
+## 这个仓库是什么
 
-`learning-assistant-profile-builder` 是一个用于 Codex 的个性化学习助手 Skill。它会先帮助用户建立长期学习档案，再在后续讲解概念、解析题目、寻找相似题、维护题型库和制定复习计划时，优先结合用户登记过的课本、PPT、讲义、参考习题、往年试卷、答案和老师重点。
+`learning-assistant` 是一个同时面向 Codex 和 Claude Code 分发的学习助手仓库。当前包含 `learning-assistant-profile-builder`，用于建立个性化学习档案，并在后续学习问答中优先结合用户指定的课本、PPT、讲义、参考习题、往年试卷、答案、老师重点和考试范围。
 
-这个 Skill 的重点不是一次性回答问题，而是帮助用户逐步建立可长期更新的学习体系。
+这个 Skill 的重点不是给一次性通用答案，而是帮助用户长期维护课程资料、学习进度、回答风格、题型库、错题库和复习规则。
 
 ## 适用场景
 
@@ -17,12 +17,34 @@
 - 根据考试范围和老师重点制定复习计划。
 - 调整长期回答风格偏好。
 
-## 安装方式
+## Codex 安装方式
 
-将本仓库复制到用户级 Codex skills 目录：
+Codex 用户可以通过 `$skill-installer` 从 GitHub 子目录安装：
+
+```text
+$skill-installer install https://github.com/Austenzcy/learning-assistant/tree/main/codex/learning-assistant-profile-builder
+```
+
+安装后重启 Codex，让新 Skill 生效。
+
+## Claude Code 安装方式
+
+Claude Code 用户可以先添加 marketplace，再安装插件：
+
+```text
+/plugin marketplace add Austenzcy/learning-assistant
+```
+
+```text
+/plugin install learning-assistant-profile-builder@learning-assistant
+```
+
+## 手动安装 Fallback
+
+Codex 手动安装时，将 `codex/learning-assistant-profile-builder` 复制到用户级 Codex skills 目录：
 
 ```powershell
-Copy-Item -Recurse -Force . "C:\Users\Lenovo\.agents\skills\learning-assistant-profile-builder"
+Copy-Item -Recurse -Force "codex\learning-assistant-profile-builder" "C:\Users\Lenovo\.agents\skills\learning-assistant-profile-builder"
 ```
 
 安装后，Skill 文件应位于：
@@ -31,9 +53,11 @@ Copy-Item -Recurse -Force . "C:\Users\Lenovo\.agents\skills\learning-assistant-p
 C:\Users\Lenovo\.agents\skills\learning-assistant-profile-builder\SKILL.md
 ```
 
+Claude Code 手动安装时，使用 `plugins/learning-assistant-profile-builder` 作为完整插件目录。该目录内包含独立完整的 Skill 文件，不依赖仓库外部路径。
+
 ## 调用方式
 
-可以通过 Codex 的 `/skills` 查看是否识别到：
+Codex 中可以通过 `/skills` 查看是否识别到：
 
 ```text
 /skills
@@ -44,6 +68,8 @@ C:\Users\Lenovo\.agents\skills\learning-assistant-profile-builder\SKILL.md
 ```text
 $learning-assistant-profile-builder
 ```
+
+Claude Code 中安装插件后，可以使用插件提供的同名 skill 工作流。
 
 ## 示例 Prompt
 
@@ -70,22 +96,56 @@ $learning-assistant-profile-builder 帮我第一次建立线性代数的学习�
 ## 文件结构说明
 
 ```text
-learning-assistant-profile-builder/
-├─ SKILL.md
+learning-assistant/
 ├─ README.md
 ├─ LICENSE
-├─ assets/
-│  └─ learner_profile_template.md
-└─ references/
-   ├─ answer_style_options.md
-   ├─ material_priority_rules.md
-   ├─ task_response_formats.md
-   └─ question_bank_rules.md
+├─ .claude-plugin/
+│  └─ marketplace.json
+├─ codex/
+│  └─ learning-assistant-profile-builder/
+│     ├─ SKILL.md
+│     ├─ assets/
+│     │  └─ learner_profile_template.md
+│     └─ references/
+│        ├─ answer_style_options.md
+│        ├─ material_priority_rules.md
+│        ├─ question_bank_rules.md
+│        └─ task_response_formats.md
+├─ plugins/
+│  └─ learning-assistant-profile-builder/
+│     ├─ .claude-plugin/
+│     │  └─ plugin.json
+│     └─ skills/
+│        └─ learning-assistant-profile-builder/
+│           ├─ SKILL.md
+│           ├─ assets/
+│           │  └─ learner_profile_template.md
+│           └─ references/
+│              ├─ answer_style_options.md
+│              ├─ material_priority_rules.md
+│              ├─ question_bank_rules.md
+│              └─ task_response_formats.md
+└─ shared/
+├─ SKILL.md
+├─ learner_profile_template.md
+├─ answer_style_options.md
+├─ material_priority_rules.md
+├─ question_bank_rules.md
+└─ task_response_formats.md
 ```
 
-- `SKILL.md`：Skill 的核心说明、触发场景、工作流和质量标准。
-- `assets/learner_profile_template.md`：不支持长期记忆时可使用的学习档案模板。
-- `references/answer_style_options.md`：回答风格选项和临时风格调整规则。
-- `references/material_priority_rules.md`：学习资料优先级、溯源和长期档案规则。
-- `references/task_response_formats.md`：概念讲解、题目解析、相似题检索、复习规划等任务格式。
-- `references/question_bank_rules.md`：题型库和错题库维护规则。
+- `codex/learning-assistant-profile-builder/`：Codex skill-installer 使用的 Skill 分发目录。
+- `plugins/learning-assistant-profile-builder/`：Claude Code 使用的插件目录。
+- `plugins/learning-assistant-profile-builder/skills/learning-assistant-profile-builder/`：Claude Code 插件内置的完整 Skill 副本。
+- `.claude-plugin/marketplace.json`：Claude Code marketplace 入口。
+- `plugins/learning-assistant-profile-builder/.claude-plugin/plugin.json`：Claude Code 插件 manifest。
+- `shared/`：维护用源内容。
+
+## 维护说明
+
+`shared/` 是源内容。更新 Skill 时，先修改 `shared/` 中的文件，再同步到：
+
+- `codex/learning-assistant-profile-builder/`
+- `plugins/learning-assistant-profile-builder/skills/learning-assistant-profile-builder/`
+
+Claude Code 插件安装后会被复制到缓存目录，因此 `plugins/learning-assistant-profile-builder/skills/learning-assistant-profile-builder/` 必须包含完整的 `SKILL.md`、`assets/` 和 `references/`，不能依赖 `../shared`。
